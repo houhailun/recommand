@@ -22,11 +22,8 @@ Q：如何评价一个推荐系统的优劣？
 A：评价一个推荐系统有3种方法：离线实验，用户调查和在线实验。评测的指标有：用户满意度，预测准确度，覆盖率，多样性，新颖性，惊喜度，信任度，实时性，健壮性和商业目标。
 """
 
-import numpy as np
-import pandas as pd
-from pandas import DataFrame, Series
 from math import sqrt
-from sklearn.feature_extraction.text import TfidfVectorizer
+
 
 class similay:
     """相似度类：欧式距离、皮尔逊相关系数"""
@@ -77,6 +74,7 @@ class similay:
             return 0
         return num / den
 
+
 class UserCF:
     """
     基于用户的协同过滤推荐算法类实现
@@ -120,7 +118,7 @@ class UserCF:
 
     # 为评论者打分，即找最近的K个人
     def topMatches(self, prefs, person, n=5, similarity=similay.sim_pearson):
-        scores = [(similarity(self,prefs, person, other), other)
+        scores = [(similarity(self, prefs, person, other), other)
                   for other in prefs if other != person]
 
         scores.sort()
@@ -154,8 +152,7 @@ class UserCF:
         # 建立一个归一化的列表
         rankings = [(total / simSum[item], item) for item, total in totals.items()]
 
-        rankings.sort()
-        rankings.reverse()
+        rankings.sort(reverse=True)
         return rankings
 
 
